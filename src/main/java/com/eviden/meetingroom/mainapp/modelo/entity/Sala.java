@@ -40,12 +40,16 @@ public class Sala implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idSala;
 	
+	@Column(nullable = false)
 	private String nombreSala;
 	
+	@Column(nullable = false)
 	private int capacidad;
 	
+	@Column(nullable = false)
 	private String ubicacion;
 	
+	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
 	/*
 	 * Valor 0 = DISPONIBLE
@@ -63,7 +67,7 @@ public class Sala implements Serializable {
 	// Union con la entidad Reserva
 	@OneToMany(mappedBy = "idSala")
 	@JsonManagedReference(value = "sala-reserva")
-	private List<Sala> salas;
+	private List<Reserva> reservas;
 	
 	@Version
 	@Column(name = "regVersion", columnDefinition = "bigint DEFAULT 0", nullable = false)

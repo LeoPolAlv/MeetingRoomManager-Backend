@@ -28,9 +28,10 @@ public class Equipo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEquipo;
 	
+	@Column(nullable = false)
 	private String nombreEquipo;
 	
-	private String DescripcionEquipo;
+	private String descripcionEquipo;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_sala")

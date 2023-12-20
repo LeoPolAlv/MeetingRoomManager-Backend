@@ -32,6 +32,7 @@ public class Rol implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRol;
 	
+	@Column(nullable = false)
 	private String nombreRol;
 	
 	private String descripcionRol; 
