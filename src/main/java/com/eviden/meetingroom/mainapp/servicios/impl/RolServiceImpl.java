@@ -1,5 +1,6 @@
 package com.eviden.meetingroom.mainapp.servicios.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,10 @@ public class RolServiceImpl implements IRolService {
 		
 		return rolDAO.findById(idRol);
 	}
-	
-	
 
+	@Override
+	public Optional<List<Rol>> buscoRoles() {
+		
+		return Optional.ofNullable(rolDAO.findAll());
+	}
 }

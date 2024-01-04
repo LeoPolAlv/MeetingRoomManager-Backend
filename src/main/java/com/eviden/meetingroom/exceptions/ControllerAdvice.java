@@ -8,6 +8,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.eviden.meetingroom.exceptions.exception.BadRequestException;
 import com.eviden.meetingroom.exceptions.exception.DataNotFoundException;
+import com.eviden.meetingroom.exceptions.exception.EmptyRequestException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -25,6 +26,13 @@ public class ControllerAdvice {
 	//controla los errores de logica o de los catch en general 400
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorFormatCampos> handlerBadRequestException(BadRequestException exception,WebRequest webRequest) {
+    	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos(exception.getMessage(), webRequest.getDescription(false));
+        return new ResponseEntity<>(errorFormatCampos, HttpStatus.BAD_REQUEST);
+    }
+    
+  //controla los errores de logica o de los catch en general 400
+    @ExceptionHandler(EmptyRequestException.class)
+    public ResponseEntity<ErrorFormatCampos> handlerBadRequestException(EmptyRequestException exception,WebRequest webRequest) {
     	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos(exception.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(errorFormatCampos, HttpStatus.BAD_REQUEST);
     }

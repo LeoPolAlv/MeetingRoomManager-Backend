@@ -15,6 +15,8 @@ import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +27,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = {@Index(columnList = "nombreRol", name = "rol_idx")})
+@Table(indexes = {@Index(columnList = "nombreRol", name = "rol_idx", unique = true)})
 public class Rol implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRol;
-	
+
 	@Column(nullable = false)
+	@NotBlank
 	private String nombreRol;
 	
 	private String descripcionRol; 
