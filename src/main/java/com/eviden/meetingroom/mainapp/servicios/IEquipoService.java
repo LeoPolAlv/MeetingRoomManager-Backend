@@ -1,5 +1,6 @@
 package com.eviden.meetingroom.mainapp.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.eviden.meetingroom.mainapp.modelo.entity.Equipo;
@@ -13,5 +14,7 @@ public interface IEquipoService {
 	public Optional<Equipo> buscoEquipoNombre(String nombre);
 	
 	public Optional<Equipo> buscoEqupoId(int id);
+	
+	public Optional<List<Equipo>>buscoAllEquipos();
 
 }

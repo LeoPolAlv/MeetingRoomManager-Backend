@@ -1,5 +1,6 @@
 package com.eviden.meetingroom.mainapp.servicios.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class EquipoServiceImpl implements IEquipoService {
 	public Optional<Equipo> buscoEqupoId(int id) {
 		
 		return equipoDao.findById(id);
+	}
+
+	@Override
+	public Optional<List<Equipo>> buscoAllEquipos() {
+	
+		return Optional.ofNullable(equipoDao.findAll());
 	}
 
 }

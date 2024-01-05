@@ -77,12 +77,12 @@ public class RolController {
 			
 			if(!updRol.getNombreRol().equals(rolAux.getNombreRol())) {
 				rolAux.setNombreRol(updRol.getNombreRol());
-				System.out.println("entramos en cambio de nombre");
+				//System.out.println("entramos en cambio de nombre");
 			}
 			
 			if(!updRol.getDescripcionRol().equals(rolAux.getDescripcionRol())) {
 				rolAux.setDescripcionRol(updRol.getDescripcionRol());
-				System.out.println("entramos en cambio de descripcion");
+				//System.out.println("entramos en cambio de descripcion");
 			}
 			
 			return new ResponseEntity<Rol>(rolService.generoRol(rolAux), HttpStatus.CREATED);

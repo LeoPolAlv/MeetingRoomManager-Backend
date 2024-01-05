@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,7 @@ public class Equipo implements Serializable {
 	private int idEquipo;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String nombreEquipo;
 	
 	private String descripcionEquipo;
