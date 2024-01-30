@@ -24,7 +24,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.Version;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,9 +52,12 @@ public class Usuario implements Serializable {
 	private Long idUser;
 	
 	//@Column(unique = true)
+	@NotBlank
+	@Email
 	private String email;
 
 	@JsonProperty(access = Access.WRITE_ONLY)// Para no enviar este campo en la Response
+	@NotBlank
 	private String password;
 
 	private boolean estadoUser;
@@ -66,10 +70,8 @@ public class Usuario implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "usuario-perfil", 
 	           joinColumns = @JoinColumn(name = "FK_user"), 
-	           inverseJoinColumns = @JoinColumn(name = "FK_rol")
-	)
+	           inverseJoinColumns = @JoinColumn(name = "FK_rol"))
 	private Set<Rol> roles;
-
 	
 	/*@ManyToOne(optional = true)
 	@JoinColumn(name = "FK_oficina")

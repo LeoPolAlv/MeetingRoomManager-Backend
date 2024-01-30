@@ -13,6 +13,8 @@ public interface IRolService {
 	
 	public Optional<Rol> buscoRol(int idRol);
 	
+	public Optional<Rol> buscoRolNombre( String nombreRol);
+	
 	public Optional<List<Rol>> buscoRoles();
 
 }

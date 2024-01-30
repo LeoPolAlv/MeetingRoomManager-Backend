@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,15 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eviden.meetingroom.exceptions.exception.BadRequestException;
 import com.eviden.meetingroom.exceptions.exception.DataNotFoundException;
-import com.eviden.meetingroom.exceptions.exception.EmptyRequestException;
 import com.eviden.meetingroom.mainapp.modelo.entity.Equipo;
-import com.eviden.meetingroom.mainapp.modelo.entity.Rol;
 import com.eviden.meetingroom.mainapp.servicios.IEquipoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
@@ -55,15 +52,24 @@ public class EquipoController {
 			return new ResponseEntity<Equipo>(equipoAux,HttpStatus.CREATED);
 			
 		} catch (DataAccessException e) {
-			throw  new BadRequestException("EQP-001",e.getMessage());
-		} catch (ConstraintViolationException ex) {
+			String msgError = "";
+			//System.out.println("menasaje Error:" + e.getRootCause().getLocalizedMessage().split("Detail: ")[1]);
+			if(e instanceof DataIntegrityViolationException){
+				//log.info("Excepcion en new User: " + e.getMessage().split("Detail:")[1]);  
+				msgError = e.getRootCause().getLocalizedMessage().split("Detail: ")[1];
+			}else {
+				//log.info("Excepcion en new User: " + e.getMessage());
+				msgError = e.getMessage();
+			}
+			throw  new BadRequestException("EQP-001",msgError);
+		}/* catch (ConstraintViolationException ex) {
 			String mensaje = "";
 			for(ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
 		         //mensaje = "El campo '" + constraintViolation.getPropertyPath() + "' : " + constraintViolation.getMessage();
-				mensaje = "El campo 'Denominacion Equipo' " + constraintViolation.getMessage();
+				mensaje = mensaje + "El campo 'Denominacion Equipo' " + constraintViolation.getMessage();
 		    }   
 			throw new EmptyRequestException(mensaje);
-		}
+		}*/
 	}
 	
 	@PutMapping(path = "/updt")

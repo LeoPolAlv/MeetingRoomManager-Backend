@@ -41,7 +41,7 @@ public class Rol implements Serializable {
 	private String descripcionRol; 
 	
 	@ManyToMany(mappedBy = "roles")
-	//@JsonProperty(access = Access.WRITE_ONLY)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<Usuario> usuarios;
 	
 	@Version

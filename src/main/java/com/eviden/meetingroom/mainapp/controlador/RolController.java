@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
@@ -53,7 +55,16 @@ public class RolController {
 			return new ResponseEntity<>(rolService.generoRol(newRol), HttpStatus.CREATED);
 			
 		} catch (DataAccessException e) {
-			throw  new BadRequestException("ROL-001",e.getMessage());
+			String msgError = "";
+			//System.out.println("menasaje Error:" + e.getRootCause().getLocalizedMessage().split("Detail: ")[1]);
+			if(e instanceof DataIntegrityViolationException){
+				//log.info("Excepcion en new User: " + e.getMessage().split("Detail:")[1]);  
+				msgError = e.getRootCause().getLocalizedMessage().split("Detail: ")[1];
+			}else {
+				//log.info("Excepcion en new User: " + e.getMessage());
+				msgError = e.getMessage();
+			}
+			throw  new BadRequestException("ROL-001",msgError);
 		} catch (ConstraintViolationException ex) {
 			String mensaje = "";
 			for(ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
@@ -114,6 +125,21 @@ public class RolController {
 	}
 	@GetMapping(path = "/")
 	public ResponseEntity<?> todosRoles(){
+		log.info("**[MeetingRoom]--- Estamos sanado de BBDD todos los roles existentes" );
+		
+		try {
+			List<Rol> rolesAux = rolService.buscoRoles()
+				.orElseThrow(() ->	new DataNotFoundException("ROL-005", "No hay ningun Rol dado de alta en el sistema"));
+			
+			return new ResponseEntity<List<Rol>>(rolesAux,HttpStatus.OK);
+			
+		} catch (DataAccessException e) {
+			throw  new BadRequestException("ROL-004",e.getMessage());
+		}
+	}
+	
+	@GetMapping(path = "/find/")
+	public ResponseEntity<?> BuscoRol(){
 		log.info("**[MeetingRoom]--- Estamos sanado de BBDD todos los roles existentes" );
 		
 		try {

@@ -7,10 +7,12 @@ import lombok.Setter;
 @Setter
 public class EmptyRequestException extends RuntimeException{
 
-	
-	public EmptyRequestException(String message) {
-		super(message);
-		System.out.println("mensaje: " + message);
+    private final String mensaje;
+    
+	public EmptyRequestException(String mensaje) {
+		super(mensaje);
+		this.mensaje = mensaje;
+		System.out.println("mensaje: " + mensaje);
 	}
 	
 	
