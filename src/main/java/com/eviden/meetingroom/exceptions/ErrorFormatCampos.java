@@ -12,9 +12,11 @@ public class ErrorFormatCampos {
 	private Date fecha = new Date();
     private String mensaje;
     private String url;
+    public String code;
 
-    public ErrorFormatCampos(String mensaje, String url) {
+    public ErrorFormatCampos( String code,String mensaje, String url) {
         this.mensaje = mensaje;
         this.url = url.replace("uri=","");
+        this.code = code;
     }
 }

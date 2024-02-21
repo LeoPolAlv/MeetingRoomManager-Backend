@@ -47,18 +47,18 @@ public class UsuarioRolController {
 		try {
 			Usuario userAux = usuarioService.buscoPorEmail(user)
 					  .orElseThrow(() -> new DataNotFoundException("USROL-001", "El usuario " + user + " NO esta dado de alta en el sistema"));
-			System.out.println("Usuario que quiero dar Roles: " + userAux.getEmail());
+			//System.out.println("Usuario que quiero dar Roles: " + userAux.getEmail());
 			//Primero cargamos los roles que ya tenga asignados el usuario
 			/*for (Rol rol : userAux.getRoles()) {
 				newRoles.add(rol);
 			}*/
 			//Cargamos los nuevos roles que se le vayan a asignar
 			for (String rol : roles) {
-				System.out.println("Rol a dar de alta: " + rol);
+			//	System.out.println("Rol a dar de alta: " + rol);
 				Rol rolAux = rolService.buscoRolNombre(rol)
 						  .orElseThrow(()-> new DataNotFoundException("USROL-002", "El Rol " + rol + " NO esta dado de alta en el sistema"));
 				newRoles.add(rolAux);
-				System.out.println("Rol encontrado: " + newRoles);
+			//	System.out.println("Rol encontrado: " + newRoles);
 				//usuarioService.newRol(rolAux, userAux.getEmail());
 			}
 			

@@ -1,6 +1,7 @@
 package com.eviden.meetingroom.mainapp.modelo.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -34,8 +35,7 @@ import lombok.Setter;
 
 
 @Entity
-@Getter
-@Setter
+@Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

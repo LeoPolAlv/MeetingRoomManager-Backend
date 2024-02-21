@@ -1,14 +1,17 @@
 package com.eviden.meetingroom.mainapp.controlador;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eviden.meetingroom.exceptions.exception.BadRequestException;
 import com.eviden.meetingroom.exceptions.exception.DataNotFoundException;
 import com.eviden.meetingroom.mainapp.DTO.UsuarioRequest;
+import com.eviden.meetingroom.mainapp.modelo.entity.Rol;
 import com.eviden.meetingroom.mainapp.modelo.entity.Usuario;
+import com.eviden.meetingroom.mainapp.servicios.IRolService;
 import com.eviden.meetingroom.mainapp.servicios.IUsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,14 +46,27 @@ public class UsuarioController {
 	@Autowired
 	IUsuarioService usuarioService;
 	
+	@Autowired
+	private PasswordEncoder  passwordEncoder;
+	
+	@Autowired
+	IRolService rolService;
+	
 	@PostMapping(path = "/new")
 	public ResponseEntity<Usuario> newUser(@RequestBody UsuarioRequest newUsuario) throws JsonProcessingException {
 		log.info("**[MeetingRoom]--- Estamos dando de alta un nuevo usuario en el sistema");
+		log.info("**[MeetingRoom]--- newUsuario: " + newUsuario.getEmail());
+		log.info("**[MeetingRoom]--- newUsuario: " + newUsuario.getPassword());
 		try {
+			Rol rolAux = rolService.buscoRol(1).get();
+			Set<Rol> roles = new HashSet<Rol>();
+			roles.add(rolAux);
+					  //.orElseThrow(()-> new DataNotFoundException("ROL-006", "No se encuentra el Rol con id: " + updRol.getIdRol() + " dado de alta en el sistema"));
 			Usuario userCreate = Usuario.builder()
 											.email(newUsuario.getEmail())
-			         						.password(newUsuario.getPassword())
+			         						.password(passwordEncoder.encode((newUsuario.getPassword())))
 		         							.estadoUser(true)
+		         							.roles(roles)
 		         							.build();
 			
 			Usuario userAux = usuarioService.newUser(userCreate);

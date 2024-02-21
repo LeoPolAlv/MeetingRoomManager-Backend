@@ -38,14 +38,14 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 	//controla los errores de logica o de los catch en general 400
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorFormatCampos> handlerBadRequestException(BadRequestException exception,WebRequest webRequest) {
-    	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos(exception.getMessage(), webRequest.getDescription(false));
+    	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos(exception.getCode(),exception.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(errorFormatCampos, HttpStatus.BAD_REQUEST);
     }
     
   //controla los errores de logica o de los catch en general 400
     @ExceptionHandler(EmptyRequestException.class)
     public ResponseEntity<?> handlerBadRequestException(EmptyRequestException exception,WebRequest webRequest) {
-    	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos(exception.getMessage(), webRequest.getDescription(false));
+    	ErrorFormatCampos errorFormatCampos = new ErrorFormatCampos("0", exception.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(errorFormatCampos, HttpStatus.BAD_REQUEST);   			          
     }
     
