@@ -72,6 +72,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 		} catch (Exception e) {
 			//throw new BadRequestException("Log-003","Error en la autenticacion del usuario");
 			//errorDetails.put("fecha", e.getStackTrace());
+			System.out.println("Excepcion que da en LOGIN: " + e.getMessage());
 			errorDetails.put("mensaje", "Error en la autenticacion del usuario");
 	        errorDetails.put("code", "LOG-003");
 	        response.setStatus(HttpStatus.FORBIDDEN.value());
