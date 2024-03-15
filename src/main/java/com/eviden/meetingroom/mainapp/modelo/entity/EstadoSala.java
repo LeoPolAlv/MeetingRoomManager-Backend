@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum EstadoSala {
-   DISPONIBLE(0), NODISPONIBLE(1);
+   NO_DISPONIBLE(0), DISPONIBLE(1);
 
    int idEstado;
 

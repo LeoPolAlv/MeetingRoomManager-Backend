@@ -38,7 +38,7 @@ public class Sala implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idSala;
+	private Integer idSala;
 	
 	@Column(nullable = false)
 	private String nombreSala;
@@ -52,8 +52,8 @@ public class Sala implements Serializable {
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
 	/*
-	 * Valor 0 = DISPONIBLE
-	 * Valor 1 = NO DISPONIBLE
+	 * Valor 1 = DISPONIBLE
+	 * Valor 0 = NO DISPONIBLE
 	 */
 	private EstadoSala estado;
 	
